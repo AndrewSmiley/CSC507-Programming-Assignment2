@@ -1,0 +1,37 @@
+  int playedCards[], score[],scores[] tablecards[];
+
+  bool playedCardsLock, scoreLock, playedCardsLock;
+
+  int numberOfCards;
+  players[4]= {p1,p2,p3,p4}
+
+  //master
+  winner =null
+  while(playedCards.size() > 52){
+    wait(playedCards)
+    wait(tableCards)
+    wait(scoreLock)
+    create() // this one clears the cards on the table
+    //go round the table
+    for(int i =0; i < 3; i++){
+    //give up acess to table cards and played cards
+        signal(playedCardsLock)
+        signal(playedCardsLock)
+        invoke(players[i])  //invoke the current player
+        wait(playedCardsLock)
+        wait(playedCardsLock)
+    }
+
+
+   }
+   destroy()
+
+   //player
+   wait(playedCardsLock)
+   wait(playedCardsLock)
+   doturn() //this one looks at the cards and takes the turn
+   tablecards.add(played_card)
+   playedcards.add(played_card)
+   //reliquish control
+   signal(playedCardsLock)
+   signal(playedCardsLock)

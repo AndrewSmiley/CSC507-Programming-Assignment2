@@ -1,30 +1,29 @@
         PROGRAM helloWorld
-	      REAL transactions(100, 4)
-        CHARACTER  name*15, address*25, city*15, province*10, balance*7
-        CHARACTER invoicefilename*20
-        CHARACTER output
-        REAL customer
-        CHARACTER ccustomer*5, tcustomer*5,titem*6,tquantity*1
-        CHARACTER tcode*1
-        INTEGER tlines, reason,clines
-        INTEGER cios, tios
-        CHARACTER t4
-        CHARACTER error*50
-        tlines=0
-*open the transactions file
+        CHARACTER  cc*5,name*15, address*25, city*15, province*10
+        REAL balance
+        CHARACTER invoicefilename*20, data*150
+        INTEGER tlines, cios,tios
 	      OPEN(unit=3, file="customers.dat")
+        cios = 0
+        tios=0
+        tlines = 1
         DO
-          READ(3,*, IOSTAT=cios) ccustomer, name, address, city, province, balance
+          READ(3,*, IOSTAT=cios) cc, name, address, city,province, balance
           print *, name
+          IF (cios > 0) THEN
+            PRINT *, cios
+            EXIT
+          ELSE IF (cios < 0) THEN
+            PRINT *, "EOF REACHED"
+            STOP
 
-          invoicefilename = "invoices/"//ccustomer//".dat"
-          OPEN(unit=1, FILE=invoicefilename,STATUS='NEW')
-          WRITE(1, '(A)') name//address//city//province
-          CLOSE(1)
-
-          tlines = tlines+1
+          ELSE
+            invoicefilename = "invoices/"//cc//".dat"
+            OPEN(unit=1, FILE=invoicefilename,STATUS='OLD')
+            data= name//" "//address//" "//city//","//province
+            WRITE(1, '(A)') name, address, city//" "//province
+            CLOSE(1)
+          END IF
         END DO
-*iterate over it and add all the values to the array
-        PRINT *, 'Hello, world!'
-        PRINT *, tlines
+
       END
